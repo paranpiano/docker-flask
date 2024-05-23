@@ -37,3 +37,29 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+- stage: Deploy
+  displayName: Deploy to Azure Web App
+  jobs:
+    - deployment: Deploy
+      displayName: Deploy Web App
+      environment: production
+      pool:
+        vmImage: $(vmImageName)
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - task: AzureWebApp@1
+                displayName: 'Azure Web App Deploy: paranpianodockerflask'
+                inputs:
+                  azureSubscription: '종량제(23f273d4-9b3d-41d3-b46f-251c740c0556)'
+                  appType: 'webApp'
+                  deployToSlotOrASEName: 'production'
+                  resourceGroupName: 'devops-task-flask_group'
+                  appName: 'devops-task-flask-container'
+                  containerType: 'dockerRegistry'
+                  dockerRegistryServiceConnection: $(dockerRegistryServiceConnection)
+                  imageRepository: '$(containerRegistry)/$(imageRepository)'
+                  tagSource: 'specified'
+                  tag: '$(tag)'
