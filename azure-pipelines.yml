@@ -54,7 +54,7 @@ stages:
                 displayName: 'Azure Web App Deploy: paranpianodockerflask'
                 inputs:
                   azureSubscription: '종량제(23f273d4-9b3d-41d3-b46f-251c740c0556)'
-                  appType: 'webApp'
+                  appType: 'webAppContainer'
                   deployToSlotOrASEName: 'production'
                   resourceGroupName: 'devops-task-flask_group'
                   appName: 'devops-task-flask-container'
